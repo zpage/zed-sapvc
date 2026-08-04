@@ -1,6 +1,6 @@
 id = "sapvc"
 name = "SAP VC"
-version = "0.1.0"
+version = "0.1.1"
 schema_version = 1
 authors = ["Zhang Peijie"]
 description = "SAP Variant Configuration (LO-VC/AVC) dependency language — highlighting (LSP in M3)"
