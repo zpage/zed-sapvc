@@ -1,7 +1,13 @@
 name = "SAP VC"
 grammar = "sapvc"
+path_suffixes = ["sapvc", "od"]
 line_comments = ["*"]
 tab_size = 2
+
+# Canonical extension is .sapvc (auto-associated via path_suffixes, no glob
+# needed, name-independent). Legacy .txt exports (PRO_*.txt / CONS_*.txt)
+# are associated via user file_types globs in ~/.config/zed/settings.json.
+# .od is kept for SAP OD exports that use it.
 
 # LSP binding happens via extension.toml [language_servers.sapvc-lsp]
 # languages = ["SAP VC"] + the Rust shell's language_server_command (M3-4).
