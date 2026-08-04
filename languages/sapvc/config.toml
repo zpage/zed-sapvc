@@ -2,10 +2,19 @@ name = "SAP VC"
 grammar = "sapvc"
 line_comments = ["*"]
 tab_size = 2
+language_servers = ["sapvc-lsp"]
 
 # File association is done via user settings (path_suffixes does not support
 # globs and '.txt' is too broad). Add to your Zed settings.json:
 #
 #   "file_types": {
 #     "SAP VC": ["**/PRO_*.txt", "**/CONS_*.txt", "**/*.od"]
+#   }
+#
+# LSP binary is configured in user settings too (see README / M3-4):
+#
+#   "lsp": {
+#     "sapvc-lsp": {
+#       "binary": { "path": "C:/Users/10586006/01Project/05ProcessOptimize/sapvc-tools/sapvc-lsp/target/debug/sapvc-lsp.exe" }
+#     }
 #   }
