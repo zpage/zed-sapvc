@@ -1,0 +1,11 @@
+[package]
+name = "zed-sapvc"
+version = "0.1.0"
+edition = "2021"
+description = "Zed extension shell for the SAP VC/AVC language (grammar + LSP bridge)"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+zed_extension_api = "0.4"

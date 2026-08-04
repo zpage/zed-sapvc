@@ -10,7 +10,6 @@ repository = "file:///C:/Users/10586006/01Project/05ProcessOptimize/sapvc-tools/
 # rev = git SHA of the tree-sitter-sapvc repo (committed 2026-08-03)
 rev = "72ac3a0ef90cbeca34ef508447bfe1bdd44ac7d3"
 
-# M3 adds the LSP server:
-# [language_servers.sapvc-lsp]
-# name = "SAP VC LSP"
-# languages = ["SAP VC"]
+[language_servers.sapvc-lsp]
+name = "SAP VC LSP"
+languages = ["SAP VC"]
