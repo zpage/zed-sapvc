@@ -8,7 +8,7 @@ description = "SAP Variant Configuration (LO-VC/AVC) dependency language — hig
 [grammars.sapvc]
 repository = "file:///C:/Users/10586006/01Project/05ProcessOptimize/sapvc-tools/tree-sitter-sapvc"
 # rev = git SHA of the tree-sitter-sapvc repo (committed 2026-08-03)
-rev = "abe6c98a03233ac953e7518cd109f0e74d5a8d59"
+rev = "a69e56e7e55a2405d17bca2fefe642ac390c1def"
 
 [language_servers.sapvc-lsp]
 name = "SAP VC LSP"
