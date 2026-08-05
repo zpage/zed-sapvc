@@ -10,7 +10,7 @@ use zed_extension_api as zed;
 
 const SAPVC_LSP: &str =
     "C:/Users/10586006/01Project/05ProcessOptimize/sapvc-tools/sapvc-lsp/target/debug/sapvc-lsp.exe";
-const CHARS_JSON: &str = "C:/Users/10586006/01Project/05ProcessOptimize/sapvc-tools/chars.json";
+const MATERIAL: &str = "C:/Users/10586006/01Project/05ProcessOptimize/sapvc-tools/material_000000008000000038.json";
 
 struct SapvcExtension;
 
@@ -27,8 +27,8 @@ impl zed::Extension for SapvcExtension {
         Ok(zed::Command {
             command: SAPVC_LSP.to_string(),
             args: vec![
-                "--chars-file".to_string(),
-                CHARS_JSON.to_string(),
+                "--data".to_string(),
+                MATERIAL.to_string(),
             ],
             env: Default::default(),
         })
