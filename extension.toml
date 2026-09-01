@@ -6,9 +6,9 @@ authors = ["Zhang Peijie"]
 description = "SAP Variant Configuration (LO-VC/AVC) dependency language — highlighting (LSP in M3)"
 
 [grammars.sapvc]
-repository = "file:///C:/Users/10586006/01Project/05ProcessOptimize/sapvc-tools/tree-sitter-sapvc"
-# rev = git SHA of the tree-sitter-sapvc repo (committed 2026-08-03)
-rev = "a69e56e7e55a2405d17bca2fefe642ac390c1def"
+repository = "file:///C:/Users/zpageHPx2025/OneDrive/01Project/Repo/sapvc-tools/tree-sitter-sapvc"
+# rev = git SHA of the tree-sitter-sapvc repo (star-comment FINAL, 2026-08-27)
+rev = "c96d3bfe4ed061472055533c4b8719eff224db8b"
 
 [language_servers.sapvc-lsp]
 name = "SAP VC LSP"

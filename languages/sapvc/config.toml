@@ -1,6 +1,7 @@
 name = "SAP VC"
 grammar = "sapvc"
 path_suffixes = ["sapvc", "od", "vcpro", "vcnet", "vccons", "vcsel", "vcpre", "vcfct"]
+path_prefixes = ["PRO_", "CONS_"]
 line_comments = ["*"]
 tab_size = 2
 

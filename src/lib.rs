@@ -9,8 +9,8 @@
 use zed_extension_api as zed;
 
 const SAPVC_LSP: &str =
-    "C:/Users/10586006/01Project/05ProcessOptimize/sapvc-tools/sapvc-lsp/target/release/sapvc-lsp.exe";
-const MATERIAL: &str = "C:/Users/10586006/01Project/05ProcessOptimize/sapvc-tools/material_000000008000000038.json";
+    "C:/Users/zpageHPx2025/OneDrive/01Project/Repo/sapvc-tools/sapvc-lsp/target/release/sapvc-lsp.exe";
+const MATERIAL: &str = "C:/Users/zpageHPx2025/OneDrive/01Project/Repo/sapvc-tools/sapvc-lsp/material-data/000000008000000038/material_000000008000000038.json";
 
 struct SapvcExtension;
 
