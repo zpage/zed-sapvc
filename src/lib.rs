@@ -5,12 +5,14 @@
 //!
 //! Build: cargo build --release --target wasm32-wasip2
 //! Output: target/wasm32-wasip2/release/zed-sapvc.wasm -> extension.wasm
+//!
+//! Configuration (environment variables):
+//!   SAPVC_LSP_BIN   path to the sapvc-lsp binary
+//!   SAPVC_MATERIAL  path to a material data package JSON
 
 use zed_extension_api as zed;
 
-const SAPVC_LSP: &str =
-    "C:/Users/zpageHPx2025/OneDrive/01Project/Repo/sapvc-tools/sapvc-lsp/target/release/sapvc-lsp.exe";
-const MATERIAL: &str = "C:/Users/zpageHPx2025/OneDrive/01Project/Repo/sapvc-tools/sapvc-lsp/material-data/000000008000000038/material_000000008000000038.json";
+const DEFAULT_LSP_BIN: &str = "sapvc-lsp";
 
 struct SapvcExtension;
 
@@ -22,14 +24,24 @@ impl zed::Extension for SapvcExtension {
     fn language_server_command(
         &mut self,
         _language_server_id: &zed::LanguageServerId,
-        _worktree: &zed::Worktree,
+        worktree: &zed::Worktree,
     ) -> zed::Result<zed::Command> {
+        let env = worktree.shell_env();
+        let bin = env
+            .iter()
+            .find(|(k, _)| k == "SAPVC_LSP_BIN")
+            .map(|(_, v)| v.clone())
+            .unwrap_or_else(|| DEFAULT_LSP_BIN.to_string());
+
+        let mut args = Vec::new();
+        if let Some((_, material)) = env.iter().find(|(k, _)| k == "SAPVC_MATERIAL") {
+            args.push("--data".to_string());
+            args.push(material.clone());
+        }
+
         Ok(zed::Command {
-            command: SAPVC_LSP.to_string(),
-            args: vec![
-                "--data".to_string(),
-                MATERIAL.to_string(),
-            ],
+            command: bin,
+            args,
             env: Default::default(),
         })
     }

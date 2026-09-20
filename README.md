@@ -1,48 +1,76 @@
-# Zed 扩展：SAP VC（M2 — 高亮）
+# zed-sapvc
 
-Zed 开发扩展目录：`C:\Users\10586006\.config\zed\extensions\dev\sapvc\`
+Zed editor extension for the **SAP Variant Configuration (LO-VC / AVC) dependency language**.
 
-## 结构
+Adds syntax highlighting and language-server support for VC dependency source files
+(`PRO_*`, `CONS_*`).
+
+## Requirements
+
+- [Zed](https://zed.dev)
+- The [`sapvc-lsp`](https://github.com/zpage/sapvc-lsp) binary, built with
+  `cargo build --release`
+- The [`tree-sitter-sapvc`](https://github.com/zpage/tree-sitter-sapvc) grammar
+
+## Structure
 
 ```
-extension.toml                 # 声明 grammar（file:// 指向 tree-sitter-sapvc 仓库）+ rev
-languages/sapvc/config.toml    # 语言名 / grammar / 注释符号
-queries/sapvc/highlights.scm   # tree-sitter 高亮查询
+extension.toml                 grammar declaration (rev pinned to tree-sitter-sapvc)
+languages/sapvc/config.toml    language name, grammar, comment tokens, file patterns
+languages/sapvc/highlights.scm tree-sitter highlight queries
+src/lib.rs                     LSP spawn shell (wasm32-wasip1)
 ```
 
-## 启用步骤（M2 终端清单，需审批）
+## Install as a development extension
 
-1. 生成 parser 并验证：
+1. Build the grammar:
+
    ```bash
-   cd C:\Users\10586006\01Project\05ProcessOptimize\sapvc-tools\tree-sitter-sapvc
-   npm install            # 装 tree-sitter-cli
-   npm run generate       # grammar.js → src/parser.c（可能有冲突要修）
-   npm run parse "<某个 PRO/CONS 文件>"   # 验证 AST
-   npm run highlight "<某个 PRO/CONS 文件>"  # 离线验证高亮查询
-   ```
-2. 让 Zed 能加载 grammar（file:// 需要 git 仓库 + SHA）：
-   ```bash
-   git init && git add -A && git commit -m "init: validated grammar"
-   git rev-parse HEAD
-   ```
-3. 把 SHA 填入 `extension.toml` 的 `rev`
-4. 重启 Zed → 打开 PRO/CONS 文件 → 底部状态栏确认语言为 "SAP VC"；
-   若未自动识别，加用户设置：
-   ```json
-   "file_types": { "SAP VC": ["**/PRO_*.txt", "**/CONS_*.txt"] }
+   cd /path/to/tree-sitter-sapvc
+   npm install
+   npm run generate
    ```
 
-## 验证点
+2. Put this directory under your Zed dev extensions folder:
 
-- `$SELF`/`$ROOT`/`$PARENT` 高亮为内建变量色
-- `?=`、`IN`、`SPECIFIED`、`AND/OR/NOT`、`is invisible` 运算符色
-- `$DEL_DEFAULT`/`TABLE`/`PFUNCTION` 函数色
-- `OBJECTS:`/`CONDITION:`/`RESTRICTIONS:`/`INFERENCES:` 关键字色
-- `*` 注释整行灰色（含中文注释）
-- 字符串（单引号）与数字（日期 20250712）各自着色
+   ```
+   <zed-config>/extensions/dev/sapvc/
+   ```
 
-## 已知待办
+3. Restart Zed and open a `.sapvc` file, `PRO_*.txt`, or `CONS_*.txt`.
+   The status bar shows `SAP VC` when detection works.
 
-- `rev` 占位符（步骤 2/3 填写）
-- tree-sitter generate 可能报冲突（`value` 的 `(...)` 与 `paren_group` 的 `(`）→ 修 grammar.js
-- M3 才加 LSP（`[language_servers.sapvc-lsp]` + Rust 壳 `language_server_command`）
+If detection fails, add explicit file patterns in your Zed settings:
+
+```json
+"file_types": { "SAP VC": ["**/PRO_*.txt", "**/CONS_*.txt"] }
+```
+
+## Configuration
+
+The extension spawns the language server through two environment variables:
+
+| Variable | Purpose |
+|---|---|
+| `SAPVC_LSP_BIN` | Path to the `sapvc-lsp` binary. Defaults to `sapvc-lsp` on `PATH`. |
+| `SAPVC_MATERIAL` | Optional path to a material data package JSON. Enables semantic checks. |
+
+Without `SAPVC_MATERIAL` the server still provides syntax diagnostics and highlighting.
+
+## What you get
+
+- `$SELF` / `$ROOT` / `$PARENT` highlighted as built-in variables
+- Operators: `?=`, `IN`, `SPECIFIED`, `AND` / `OR` / `NOT`, `is invisible`
+- Function colors for `$DEL_DEFAULT`, `TABLE`, `PFUNCTION`
+- Section keywords: `OBJECTS:`, `CONDITION:`, `RESTRICTIONS:`, `INFERENCES:`
+- `*` comments styled as comments
+- Real-time diagnostics: unknown characteristic names, unknown variant tables,
+  missing colons, unmatched blocks
+
+## Notes
+
+- The highlight query uses the node name `comment_statement`, not `comment`.
+  Zed refuses to load a language whose query names a node that the grammar
+  does not define.
+- `settings.json` `file_types` globs do not apply in dev extension mode. Use the
+  `path_suffixes` / `path_prefixes` rules in `languages/sapvc/config.toml`.
