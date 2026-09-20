@@ -3,12 +3,11 @@ name = "SAP VC"
 version = "0.1.2"
 schema_version = 1
 authors = ["Zhang Peijie"]
-description = "SAP Variant Configuration (LO-VC/AVC) dependency language — highlighting (LSP in M3)"
+description = "SAP Variant Configuration (LO-VC/AVC) dependency language — syntax highlighting and language server"
 
 [grammars.sapvc]
-repository = "file:///C:/Users/zpageHPx2025/OneDrive/01Project/Repo/sapvc-tools/tree-sitter-sapvc"
-# rev = git SHA of the tree-sitter-sapvc repo (star-comment FINAL, 2026-08-27)
-rev = "c96d3bfe4ed061472055533c4b8719eff224db8b"
+repository = "https://github.com/zpage/tree-sitter-sapvc"
+rev = "ef7d5a4cfd2352683a65c0b4853efbb191ac531c"
 
 [language_servers.sapvc-lsp]
 name = "SAP VC LSP"
